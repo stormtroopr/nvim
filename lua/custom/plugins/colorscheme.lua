@@ -1,6 +1,6 @@
 return {
-  "tanvirtin/monokai.nvim",
+  'tanvirtin/monokai.nvim',
   config = function()
-    vim.cmd("colorscheme monokai")
+    vim.cmd 'colorscheme monokai'
   end,
 }
