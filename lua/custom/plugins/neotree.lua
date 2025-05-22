@@ -7,7 +7,11 @@ return {
     'MunifTanjim/nui.nvim',
   },
   config = function()
-    require('neo-tree').setup()
+    require('neo-tree').setup {
+      filesystem = {
+        hijack_netrw_behavior = 'disabled', --  disables auto-open
+      },
+    }
     vim.keymap.set('n', '<leader>e', '<cmd>Neotree toggle<CR>', { desc = 'Toggle Neo-tree' })
   end,
 }
