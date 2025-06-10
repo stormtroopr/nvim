@@ -24,3 +24,16 @@ map('n', '<leader>v', ':vsplit<CR>', { desc = 'Open vertical split to the right'
 
 -- Open horizontal split below
 map('n', '<leader>h', ':split<CR>', { desc = 'Open horizontal split below', silent = true })
+
+-- My custom bookmarks implementaion key maps.
+map('n', '<leader>a', function()
+  require('custom.bookmarks').add()
+end, { desc = 'Bookmark current file', noremap = true, silent = true })
+
+map('n', '<leader>y', function()
+  require('custom.bookmarks').list()
+end, { desc = 'List bookmarks', noremap = true, silent = true })
+
+map('n', '<leader>r', function()
+  require('custom.bookmarks').remove()
+end, { desc = 'Remove current file from bookmarks', noremap = true, silent = true })
