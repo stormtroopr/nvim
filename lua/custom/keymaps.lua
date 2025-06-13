@@ -37,3 +37,7 @@ end, { desc = 'List bookmarks', noremap = true, silent = true })
 map('n', '<leader>r', function()
   require('custom.bookmarks').remove()
 end, { desc = 'Remove current file from bookmarks', noremap = true, silent = true })
+
+map('n', '<leader>x', function()
+  require('custom.bookmarks').clear()
+end, { desc = 'Clear all bookmarks', noremap = true, silent = true })

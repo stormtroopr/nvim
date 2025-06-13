@@ -2,31 +2,34 @@ local M = {}
 local json = vim.fn.json_encode
 local parse = vim.fn.json_decode
 local save_path = vim.fn.stdpath 'data' .. '/bookmarks.json'
+local fs_realpath = vim.loop.fs_realpath
 
 local function save()
   vim.fn.writefile({ json(M.files) }, save_path)
 end
 
-if vim.fn.filereadable(save_path) == 1 then
-  local ok, content = pcall(vim.fn.readfile, save_path)
-  if ok and content[1] then
-    M.files = parse(content[1]) or {}
-  else
-    M.files = {}
-  end
+local ok, raw = pcall(vim.fn.readfile, save_path)
+if ok and raw[1] then
+  local parsed = parse(raw[1])
+  M.files = type(parsed) == 'table' and parsed or {}
 else
   M.files = {}
 end
 
 function M.add()
-  local path = vim.fn.expand '%:p'
-  if not vim.tbl_contains(M.files, path) then
-    table.insert(M.files, path)
-    save()
-    vim.notify('🔖 Added to bookmarks: ' .. vim.fn.fnamemodify(path, ':t'))
-  else
-    vim.notify('⚠️ File already bookmarked', vim.log.levels.WARN)
+  local raw_path = vim.fn.expand '%:p'
+  local path = fs_realpath(raw_path) or raw_path
+
+  for _, p in ipairs(M.files) do
+    if fs_realpath(p) == path then
+      vim.notify('⚠️ File already bookmarked', vim.log.levels.WARN)
+      return
+    end
   end
+
+  table.insert(M.files, path)
+  save()
+  vim.notify('🔖 Added to bookmarks: ' .. vim.fn.fnamemodify(path, ':t'))
 end
 
 function M.list()
@@ -35,12 +38,15 @@ function M.list()
   local sorters = require('telescope.config').values.generic_sorter
   local actions = require 'telescope.actions'
   local action_state = require 'telescope.actions.state'
+  local visible_files = vim.tbl_filter(function(path)
+    return vim.fn.filereadable(path) == 1
+  end, M.files)
 
   telescope
     .new({}, {
-      prompt_title = 'Bookmarked Files',
+      prompt_title = 'MLC73 On deck',
       finder = finders.new_table {
-        results = M.files,
+        results = visible_files,
         entry_maker = function(entry)
           return {
             value = entry,
@@ -73,6 +79,12 @@ function M.remove()
     end
   end
   vim.notify('⚠️ File not in bookmarks', vim.log.levels.WARN)
+end
+
+function M.clear()
+  M.files = {}
+  save()
+  vim.notify '🧹 Cleared all bookmarks'
 end
 
 return M
