@@ -16,6 +16,7 @@ return {
       sass = { 'prettier' },
       javascript = { 'prettier' },
       typescript = { 'prettier' },
+      typescriptreact = { 'prettier' },
       json = { 'prettier' },
       html = { 'prettier' },
     },
