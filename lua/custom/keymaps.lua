@@ -41,3 +41,7 @@ end, { desc = 'Remove current file from bookmarks', noremap = true, silent = tru
 map('n', '<leader>x', function()
   require('custom.bookmarks').clear()
 end, { desc = 'Clear all bookmarks', noremap = true, silent = true })
+
+-- folding
+vim.keymap.set('n', '<leader>cc', vim.cmd.foldopen)
+vim.keymap.set('n', '<leader>co', vim.cmd.foldclose)

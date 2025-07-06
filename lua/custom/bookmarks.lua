@@ -60,7 +60,14 @@ function M.list()
         map('i', '<CR>', function(prompt_bufnr)
           local selection = action_state.get_selected_entry()
           actions.close(prompt_bufnr)
-          vim.cmd('edit ' .. selection.value)
+
+          local ok, err = pcall(function()
+            vim.cmd('edit ' .. selection.value)
+          end)
+
+          if not ok then
+            vim.notify('Failed to open file: ' .. err, vim.log.levels.ERROR)
+          end
         end)
         return true
       end,
