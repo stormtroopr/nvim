@@ -1,3 +1,4 @@
+print 'colorscheme plugin loaded'
 -- return {
 --   'tanvirtin/monokai.nvim',
 --   config = function()
@@ -9,7 +10,6 @@ return {
   {
     'cpplain/flexoki.nvim',
     lazy = false,
-    priority = 1000,
     config = function()
       vim.cmd 'colorscheme flexoki'
     end,
@@ -19,7 +19,6 @@ return {
 -- return {
 --   'catppuccin/nvim',
 --   name = 'catppuccin',
---   priority = 1000,
 --   config = function()
 --     vim.cmd 'colorscheme catppuccin-mocha'
 --   end,
@@ -38,7 +37,6 @@ return {
 --   {
 --     'jacoborus/tender.vim',
 --     lazy = false,
---     priority = 1000,
 --     config = function()
 --       vim.opt.termguicolors = true
 --       vim.cmd 'colorscheme tender'

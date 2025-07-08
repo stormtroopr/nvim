@@ -42,6 +42,18 @@ map('n', '<leader>x', function()
   require('custom.bookmarks').clear()
 end, { desc = 'Clear all bookmarks', noremap = true, silent = true })
 
--- folding
-vim.keymap.set('n', '<leader>cc', vim.cmd.foldopen)
-vim.keymap.set('n', '<leader>co', vim.cmd.foldclose)
+-- Find and replace in buffer
+map('n', '<leader>fr', ':%s///g<Left><Left>', opts)
+
+-- Folding
+-- Close current fold
+vim.keymap.set('n', '<leader>ff', 'zc', opts)
+
+-- Open current fold
+vim.keymap.set('n', '<leader>fg', 'zo', opts)
+
+-- Bonus: collapse all folds
+vim.keymap.set('n', '<leader>fF', 'zM', opts)
+
+-- Bonus: expand all folds
+vim.keymap.set('n', '<leader>fG', 'zR', opts)

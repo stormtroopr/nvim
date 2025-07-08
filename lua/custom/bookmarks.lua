@@ -1,4 +1,5 @@
 local M = {}
+print '>> bookmarks plugin loaded'
 local json = vim.fn.json_encode
 local parse = vim.fn.json_decode
 local save_path = vim.fn.stdpath 'data' .. '/bookmarks.json'
