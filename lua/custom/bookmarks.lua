@@ -12,7 +12,12 @@ end
 local ok, raw = pcall(vim.fn.readfile, save_path)
 if ok and raw[1] then
   local parsed = parse(raw[1])
-  M.files = type(parsed) == 'table' and parsed or {}
+  if type(parsed) == 'table' and vim.tbl_islist(parsed) then
+    M.files = parsed
+  else
+    vim.notify('[bookmarks] Corrupt bookmarks.json, resetting', vim.log.levels.WARN)
+    M.files = {}
+  end
 else
   M.files = {}
 end
