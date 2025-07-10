@@ -2,7 +2,11 @@ local M = {}
 print '>> bookmarks plugin loaded'
 local json = vim.fn.json_encode
 local parse = vim.fn.json_decode
-local save_path = vim.fn.stdpath 'data' .. '/bookmarks.json'
+local project_root = vim.fn.getcwd() -- or use a smarter root finder if you want
+local hash = vim.fn.sha256(project_root):sub(1, 8)
+local project_name = vim.fn.fnamemodify(project_root, ':t')
+local save_path = vim.fn.stdpath 'data' .. '/bookmarks_' .. hash .. '.json'
+
 local fs_realpath = vim.loop.fs_realpath
 
 local function save()
@@ -12,7 +16,7 @@ end
 local ok, raw = pcall(vim.fn.readfile, save_path)
 if ok and raw[1] then
   local parsed = parse(raw[1])
-  if type(parsed) == 'table' and vim.tbl_islist(parsed) then
+  if type(parsed) == 'table' and vim.islist(parsed) then
     M.files = parsed
   else
     vim.notify('[bookmarks] Corrupt bookmarks.json, resetting', vim.log.levels.WARN)
@@ -50,7 +54,7 @@ function M.list()
 
   telescope
     .new({}, {
-      prompt_title = 'MLC73 On deck',
+      prompt_title = 'On deck => ' .. vim.fn.fnamemodify(project_name, ':t'),
       finder = finders.new_table {
         results = visible_files,
         entry_maker = function(entry)
@@ -62,19 +66,39 @@ function M.list()
         end,
       },
       sorter = sorters(),
-      attach_mappings = function(_, map)
-        map('i', '<CR>', function(prompt_bufnr)
+
+      attach_mappings = function(prompt_bufnr, map)
+        local delete_entry = function()
+          local selection = action_state.get_selected_entry()
+          if not selection then
+            return
+          end
+
+          -- Remove from M.files
+          for i, p in ipairs(M.files) do
+            if p == selection.value then
+              table.remove(M.files, i)
+              save()
+              vim.notify('❌ Removed bookmark: ' .. vim.fn.fnamemodify(p, ':t'))
+              break
+            end
+          end
+
+          -- Refresh picker
+          actions.close(prompt_bufnr)
+          vim.defer_fn(function()
+            M.list()
+          end, 10)
+        end
+
+        map('i', '<CR>', function()
           local selection = action_state.get_selected_entry()
           actions.close(prompt_bufnr)
-
-          local ok, err = pcall(function()
-            vim.cmd('edit ' .. selection.value)
-          end)
-
-          if not ok then
-            vim.notify('Failed to open file: ' .. err, vim.log.levels.ERROR)
-          end
+          vim.cmd.edit(selection.value)
         end)
+
+        map('n', 'dd', delete_entry)
+
         return true
       end,
     })
