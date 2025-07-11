@@ -1,9 +1,27 @@
 print 'colorscheme plugin loaded'
+
 -- return {
 --   'tanvirtin/monokai.nvim',
 --   config = function()
 --     vim.cmd 'colorscheme monokai'
 --   end,
+-- }
+
+-- return {
+--   'navarasu/onedark.nvim',
+--   config = function()
+--     require('onedark').setup {
+--       style = 'warmer',
+--     }
+--     -- Enable theme
+--     require('onedark').load()
+--   end,
+-- }
+
+-- return {
+--   'eldritch-theme/eldritch.nvim',
+--   lazy = false,
+--   opts = {},
 -- }
 
 return {
@@ -29,7 +47,7 @@ return {
 --   lazy = false,
 --   priority = 1000,
 --   config = function()
---     vim.cmd 'colorscheme tokyonight'
+--     vim.cmd 'colorscheme tokyonight-storm'
 --   end,
 -- }
 
