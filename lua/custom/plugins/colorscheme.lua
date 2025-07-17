@@ -23,16 +23,25 @@ print 'colorscheme plugin loaded'
 --   lazy = false,
 --   opts = {},
 -- }
-
 return {
   {
-    'cpplain/flexoki.nvim',
+    'tomasiser/vim-code-dark',
     lazy = false,
     config = function()
-      vim.cmd 'colorscheme flexoki'
+      vim.cmd 'colorscheme codedark'
     end,
   },
 }
+
+-- return {
+--   {
+--     'cpplain/flexoki.nvim',
+--     lazy = false,
+--     config = function()
+--       vim.cmd 'colorscheme flexoki'
+--     end,
+--   },
+-- }
 
 -- return {
 --   'catppuccin/nvim',
