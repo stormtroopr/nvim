@@ -45,15 +45,19 @@ end, { desc = 'Clear all bookmarks', noremap = true, silent = true })
 -- Find and replace in buffer
 map('n', '<leader>fr', ':%s///g<Left><Left>', opts)
 
--- Folding
+-- Folding --
 -- Close current fold
 vim.keymap.set('n', '<leader>ff', 'zc', opts)
 
 -- Open current fold
 vim.keymap.set('n', '<leader>fg', 'zo', opts)
 
--- Bonus: collapse all folds
+-- collapse all folds
 vim.keymap.set('n', '<leader>fF', 'zM', opts)
 
--- Bonus: expand all folds
+-- expand all folds
 vim.keymap.set('n', '<leader>fG', 'zR', opts)
+
+-- Paste from yank register instead of overwritten text
+map('n', '<leader>p', '"0p', opts)
+map('v', '<leader>p', '"0p', opts)
