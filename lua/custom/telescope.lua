@@ -9,6 +9,7 @@ M.live_grep_globs = {
   '--glob=!dist/**',
   '--glob=!wwwroot/build/**',
   '--glob=!wwwroot/scripts/*',
+  '--glob=!wwwroot/test-results/*',
   '--glob=!*-lock.json',
   '--glob=!*.png',
   '--glob=!*.jpg',
