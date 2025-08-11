@@ -1,11 +1,11 @@
 print 'colorscheme plugin loaded'
 
--- return {
---   'tanvirtin/monokai.nvim',
---   config = function()
---     vim.cmd 'colorscheme monokai'
---   end,
--- }
+return {
+  'tanvirtin/monokai.nvim',
+  config = function()
+    vim.cmd 'colorscheme monokai'
+  end,
+}
 
 -- return {
 --   'navarasu/onedark.nvim',
@@ -23,15 +23,15 @@ print 'colorscheme plugin loaded'
 --   lazy = false,
 --   opts = {},
 -- }
-return {
-  {
-    'tomasiser/vim-code-dark',
-    lazy = false,
-    config = function()
-      vim.cmd 'colorscheme codedark'
-    end,
-  },
-}
+-- return {
+--   {
+--     'tomasiser/vim-code-dark',
+--     lazy = false,
+--     config = function()
+--       vim.cmd 'colorscheme codedark'
+--     end,
+--   },
+-- }
 
 -- return {
 --   {

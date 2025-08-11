@@ -61,3 +61,6 @@ vim.keymap.set('n', '<leader>fG', 'zR', opts)
 -- Paste from yank register instead of overwritten text
 map('n', '<leader>p', '"0p', opts)
 map('v', '<leader>p', '"0p', opts)
+
+-- treat a hypen as part of a word
+vim.opt.iskeyword:append '-'
