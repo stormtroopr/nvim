@@ -42,6 +42,10 @@ map('n', '<leader>x', function()
   require('custom.bookmarks').clear()
 end, { desc = 'Clear all bookmarks', noremap = true, silent = true })
 
+vim.keymap.set('n', '<leader>ii', function()
+  vim.lsp.buf.code_action()
+end, { desc = 'LSP: Add import for symbol under cursor' })
+
 -- Find and replace in buffer
 map('n', '<leader>fr', ':%s///g<Left><Left>', opts)
 
